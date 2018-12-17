@@ -6,7 +6,7 @@ services:
     image: mysql:8
     restart: always
     volumes:
-     - ./ENV/database:/docker-entrypoint-initdb.d
+     - ./database:/docker-entrypoint-initdb.d
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=socle_symfony2_pfe_db
@@ -25,7 +25,7 @@ services:
     ports:
       - 8085:80
     volumes:
-      - ./:/var/www/html
+      - ../:/var/www/html
     tty: true
     networks:
       app_net:
