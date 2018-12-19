@@ -1,1 +1,1 @@
-CREATE DATABASE opcl;
+CREATE DATABASE opclroom;

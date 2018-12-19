@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 cd /var/www/html
 wget http://cs.sensiolabs.org/download/php-cs-fixer-v2.phar -O php-cs-fixer
+cp -f Poujoulat-espace-pro-infrastructure/poujoulat_pro_env_itg/parameters.yml app/config/parameters.yml
 set -e
 host="$1"
 port="$2"
@@ -17,4 +18,6 @@ setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 # permession to cache and log
 chown -R www-data:www-data app/cache  app/logs
 chmod -R 777 app/cache  app/logs node_modules
-/usr/sbin/apache2ctl -D FOREGROUND
+
+
+/usr/sbin/apache2ctl -D FOREGROUNDOUND
