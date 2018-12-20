@@ -1,0 +1,42 @@
+db:
+  image: mysql:8
+  container_name: opclroom-mysql
+  volumes:
+    - ./database:/docker-entrypoint-initdb.d
+  environment:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=opclroom
+    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    - MYSQL_RANDOM_ROOT_PASSWORD=
+  command: mysqld --max_allowed_packet=500M
+  ports:
+    - "3316:3306"
+
+#elasticsearch:
+#  image: quay.io/trackmaven/elasticsearch:1.7
+#  container_name: elasticsearch-bo-poujoulatfr-dev
+#  ports:
+#    - "9200:9200"
+
+web:
+  build: .
+  container_name: opclroom-apache
+  links:
+    - db
+  ports:
+    - 7075:80
+  volumes:
+    - ../:/var/www/html
+  entrypoint: ./ENV/entrypoint.sh opclroom-mysql 3306
+
+
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  container_name: phpmyadmin
+  ports :
+  - "8159:80"
+  environment:
+  - PMA_HOST=172.16.0.81
+  - PMA_PORT=3316
+  - MYSQL_USERNAME=root
+  - MYSQL_PASSWORD=root
