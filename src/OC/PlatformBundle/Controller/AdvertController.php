@@ -11,14 +11,16 @@ namespace OC\PlatformBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
-class AdvertController extends Controller
-{
+class AdvertController extends Controller {
 
-    public function indexAction()
-    {
+  public function helloAction() {
 
+    return $this->render('@OCPlatform/Advert/hello.html.twig', array('nom' => 'AhmedHt'));
+  }
 
-        return $this->render('@OCPlatform/Advert/index.html.twig', array('nom' => 'AhmedHt'));
-    }
+  public function byeAction() {
+
+    return $this->render('@OCPlatform/Advert/bye.html.twig', array('nom' => 'AhmedHt'));
+  }
 
 }
