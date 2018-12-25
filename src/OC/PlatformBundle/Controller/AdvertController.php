@@ -22,14 +22,23 @@ class AdvertController extends Controller {
 
   public function viewAction($id, Request $request) {
     $tag = $request->query->get('tag');
-    return new Response(
-      "Affichage de l'annonce d'id : " . $id . ", avec le tag : " . $tag
-    );
+    $session = $request->getSession();
+    $session->set('user_id', 91);
+    $userId = $session->get('user_id');
+
+
+    return $this->render('@OCPlatform/Advert/view.html.twig', array(
+      'id' => $id,
+      'tag' => $tag,
+      'user_id' => $userId
+    ));
   }
 
-  public function addAction() {
+  public function addAction(Request $request) {
+    $session = $request->getSession();
 
-    return $this->render('@OCPlatform/Advert/bye.html.twig', array('nom' => 'AhmedHt'));
+    $session->getFlashBag()->add('info', 'Bonjour Mr');
+    return $this->redirectToRoute('oc_platform_view', array('id' => 5));
   }
 
   public function editAction() {

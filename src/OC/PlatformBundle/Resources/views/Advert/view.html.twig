@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Affichage de l'annonce {{ id }}</title>
+</head>
+<body>
+<h1>Hello Annonce n°{{ id }} !</h1>
+<p>Tag éventuel : {{ tag }}</p>
+<p>Id de l'utilisateur : {{ user_id }}</p>
+<div>
+  {% for message in app.session.flashbag.get('info') %}
+    <p>Message flash : {{ message }}</p>
+  {% endfor %}
+</div>
+</body>
+</html>

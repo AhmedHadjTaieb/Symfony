@@ -8,6 +8,13 @@
 # Introduction
 This project provide a simple installation of opclroom Sites with Symfony v3.4.
 
+## Git global setup:
+```bash
+git config --global user.name "FirstName SecondName"
+git config --global user.email "yourmail@sifast.com"
+git clone https://github.com/AhmedHadjTaieb/Symfony.git
+```
+
 # Pre-requise
  * Docker
  * Docker Compose
@@ -15,7 +22,6 @@ This project provide a simple installation of opclroom Sites with Symfony v3.4.
  ```bach
 sudo nano /etc/hosts
  ```
-
 
 # Virtual-environment
 This project create a virtual environment composed by :
@@ -25,11 +31,25 @@ This project create a virtual environment composed by :
 
 # Usage
  To start developpement environnement run this command :
+ 
+Using ACL on a System that Supports setfacl
 ```bach
+./ENV/start_dev.sh
+```
+Using ACL on a System that Supports chmod +a
+```bach
+*First Step:
+ (Add these lines in ./ENV/entrypoint.sh)
+ rm -rf var/cache/*
+ rm -rf var/logs/*
+
+ HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1)
+ sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" var
+ sudo chmod +a "$(whoami) allow delete,write,append,file_inherit,directory_inherit" var
+ 
+*Second Step:
 cd <PROJECT_PATH>./ENV/
-
-docker-compose --project-name opclroom -f Docker-compose.yml up --build -d 
-
+docker-compose --project-name opclroom -f docker-compose.yml up --build -d 
 ```
 
 # Params
