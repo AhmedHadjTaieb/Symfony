@@ -10,6 +10,7 @@ namespace OC\PlatformBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 
 class AdvertController extends Controller {
@@ -19,9 +20,11 @@ class AdvertController extends Controller {
     return $this->render('@OCPlatform/Advert/hello.html.twig', array('nom' => 'AhmedHt'));
   }
 
-  public function viewAction($id) {
-
-    return new Response("Affichage de l'annonce d'id : ".$id);
+  public function viewAction($id, Request $request) {
+    $tag = $request->query->get('tag');
+    return new Response(
+      "Affichage de l'annonce d'id : " . $id . ", avec le tag : " . $tag
+    );
   }
 
   public function addAction() {

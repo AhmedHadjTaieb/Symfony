@@ -37,10 +37,6 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && docker-php-ext-install gd zip
 
-RUN usermod -u 1000 www-data
-RUN chown -R www-data:www-data /var/www/html
-
-
 
 RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
     && chmod +x /usr/local/bin/composer
@@ -99,5 +95,4 @@ RUN pecl install xdebug \
 
 RUN chmod u+x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
-ENTRYPOINT apache2-foreground && /bin/bash
 CMD ["true"]
