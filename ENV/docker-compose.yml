@@ -9,7 +9,7 @@ db:
     - MYSQL_DATABASE=opclroom
     - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     - MYSQL_RANDOM_ROOT_PASSWORD=
-  command: mysqld --max_allowed_packet=500M
+  command: ['--max_allowed_packet=500M', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
   ports:
     - "3316:3306"
 
@@ -29,7 +29,9 @@ web:
     - 7075:80
   volumes:
     - ../:/var/www/html
-  entrypoint: ./ENV/entrypoint.sh opclroom-mysql 3306
+  environment:
+    - MYSQL_HOST=opclroom-mysql
+    - MYSQL_PORT=3306
 
 
 phpmyadmin:
@@ -41,5 +43,7 @@ phpmyadmin:
   ports :
   - "8159:80"
   environment:
-  - MYSQL_USERNAME=root
+  - MYSQL_USER=root
   - MYSQL_PASSWORD=root
+  - MYSQL_ROOT_PASSWORD=root
+
