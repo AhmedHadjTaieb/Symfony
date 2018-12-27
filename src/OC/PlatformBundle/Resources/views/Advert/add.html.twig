@@ -1,9 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Add nouvelle annonce}</title>
-</head>
-<body>
-<h1>Ajouter Annonce n°!</h1>
-</body>
-</html>
+{% extends "@OCPlatform/layout.html.twig" %}
+
+{% block title %}
+  Ajouter une nouvelle annonce - {{ parent() }}
+{% endblock %}
+
+{% block ocplatform_body %}
+
+  <h2>Ajouter une annonce</h2>
+
+  {{ include("@OCPlatform/Advert/form.html.twig") }}
+
+  <p>
+    Vous ajouter une nouvelle annonce.
+  </p>
+
+
+
+{% endblock %}
