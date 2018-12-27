@@ -41,7 +41,7 @@ class AppKernel extends Kernel
 
     public function getCacheDir()
     {
-        return dirname(__DIR__).'/var/cache/'.$this->getEnvironment();
+        return '/dev/shm/symfony_docker_test/cache/'.$this->getEnvironment();
     }
 
     public function getLogDir()
