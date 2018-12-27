@@ -12,5 +12,12 @@
     <p>Message flash : {{ message }}</p>
   {% endfor %}
 </div>
+<i>{{ webmaster }}</i>
+
+{% for key,valeur in liste %}
+    <div class="{% if loop.index is even %}pair{% else %}impair{% endif %}">
+   {{ key }} :{{ valeur }}
+  </div>
+{% endfor %}
 </body>
 </html>
