@@ -5,7 +5,7 @@ waitMoment=0
 # main function
   >&2 echo " $(date '+%Y-%m-%d %H:%M:%S')  ## Wait for Mysql";
 while ! nc -z "$MYSQL_HOST" "$MYSQL_PORT"; do
-      sleep 5;
+      sleep 10;
       let "waitMoment += 5"
     >&2 echo " $(date '+%H:%M:%S')  --> Waiting for Mysql $waitMoment seconds";
 done
@@ -25,5 +25,9 @@ chmod -R 777 web/uploads
 # app/console fos:elastica:populate
 #  >&2 echo " $(date '+%Y-%m-%d %H:%M:%S')  ## ca:cl"
   >&2 echo " $(date '+%Y-%m-%d %H:%M:%S')  ##  Run apache in foreground"
+
+chown -R www-data:www-data /app-logs /app-cache
+
+chmod -R 777 /app-logs /app-cache
 
 apachectl -D FOREGROUND

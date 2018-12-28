@@ -30,6 +30,8 @@ web:
   volumes:
     - ../:/var/www/html
     - /app-vendor
+    - /app-cache
+    - /app-logs
   environment:
     - MYSQL_HOST=opclroom-mysql
     - MYSQL_PORT=3306
