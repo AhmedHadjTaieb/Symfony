@@ -1,0 +1,21 @@
+{% extends "@CoreBundle/layout.html.twig" %}
+
+{% block title %}
+    Acceuil
+{% endblock %}
+
+{% block ocplatform_body %}
+
+    <h2>Page d'acceuil</h2>
+
+    <div>
+        {% for message in app.session.flashbag.get('info') %}
+            <p>Message flash : {{ message }}</p>
+        {% endfor %}
+    </div>
+
+     {% for advert in listOfLastAdvert %}
+         <h4>{{ advert.title}}</h4>
+     {% endfor %}
+
+{% endblock %}

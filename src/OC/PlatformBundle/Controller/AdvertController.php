@@ -59,7 +59,11 @@ class AdvertController extends Controller
   }
 
   public function addAction(Request $request) {
-
+      $antispam = $this->container->get('oc_platform.antispam');
+      $text = '......';
+      if ($antispam->isSpam($text)) {
+          throw new \Exception('Votre message a été détecté comme spam !');
+      }
     return $this->render('@OCPlatform/Advert/add.html.twig');
   }
 
