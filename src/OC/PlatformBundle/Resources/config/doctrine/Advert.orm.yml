@@ -19,4 +19,14 @@ OC\PlatformBundle\Entity\Advert:
             type: datetime
         content:
             type: text
+        published:
+            type: boolean
+    oneToOne:
+        image:
+          targetEntity: Image
+          joinColumn:
+            name: image
+            referencedColumnName: id
+            cascade: persist
+
     lifecycleCallbacks: {  }
