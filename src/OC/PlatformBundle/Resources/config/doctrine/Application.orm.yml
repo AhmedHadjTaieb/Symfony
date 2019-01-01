@@ -1,0 +1,27 @@
+OC\PlatformBundle\Entity\Application:
+    type: entity
+    table: null
+    repositoryClass: OC\PlatformBundle\Repository\ApplicationRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        author:
+            type: string
+            length: 255
+        content:
+            type: text
+        date:
+            type: datetime
+    manyToOne:
+        advert:
+            targetEntity: OC\PlatformBundle\Entity\Advert
+            joinColumn:
+                name: advert_id
+                referencedColumnName: id
+                nullable: false
+
+    lifecycleCallbacks: {  }

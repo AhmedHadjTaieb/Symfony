@@ -23,10 +23,21 @@ OC\PlatformBundle\Entity\Advert:
             type: boolean
     oneToOne:
         image:
-          targetEntity: Image
+          targetEntity: OC\PlatformBundle\Entity\Image
           joinColumn:
-            name: image
+            name: image_id
             referencedColumnName: id
-            cascade: persist
-
+          cascade: [persist]
+    manyToMany:
+      categories:
+        targetEntity: OC\PlatformBundle\Entity\Category
+        joinTable:
+          name: advert_category
+          joinColumns:
+            adver_id:
+              referencedColumnName: id
+          inverseJoinColumns:
+            category_id:
+              referencedColumnName: id
+        cascade: [persist]
     lifecycleCallbacks: {  }
