@@ -40,4 +40,8 @@ OC\PlatformBundle\Entity\Advert:
             category_id:
               referencedColumnName: id
         cascade: [persist]
+    oneToMany:
+      applications:
+        targetEntity: OC\PlatformBundle\Entity\Application
+        mappedBy: advert
     lifecycleCallbacks: {  }

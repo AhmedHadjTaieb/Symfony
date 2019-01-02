@@ -19,6 +19,7 @@ OC\PlatformBundle\Entity\Application:
     manyToOne:
         advert:
             targetEntity: OC\PlatformBundle\Entity\Advert
+            inversedBy: applications
             joinColumn:
                 name: advert_id
                 referencedColumnName: id

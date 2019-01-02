@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use OC\PlatformBundle\Entity\Advert;
 use OC\PlatformBundle\Entity\Image;
 use OC\PlatformBundle\Entity\Application;
+use OC\PlatformBundle\Entity\AdvertSkill;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 use \Datetime;
@@ -62,10 +63,14 @@ class AdvertController extends Controller {
     $listApplications = $em
       ->getRepository('OCPlatformBundle:Application')
       ->findBy(array('advert' => $advert));
+    $listAdvertSkills = $em
+      ->getRepository('OCPlatformBundle:AdvertSkill')
+      ->findBy(array('advert' => $advert));
 
     return $this->render('@OCPlatform/Advert/view.html.twig', array(
       'advert'           => $advert,
-      'listApplications' => $listApplications
+      'listApplications' => $listApplications,
+      'listAdvertSkills' => $listAdvertSkills
     ));
 
   }
@@ -89,6 +94,24 @@ class AdvertController extends Controller {
     $em = $this->getDoctrine()->getManager();
 
     // Étape 1 : On « persiste » l'entité
+    $listSkills = $em->getRepository('OCPlatformBundle:Skill')->findAll();
+
+    // Pour chaque compétence
+    foreach ($listSkills as $skill) {
+      // On crée une nouvelle « relation entre 1 annonce et 1 compétence »
+      $advertSkill = new AdvertSkill();
+
+      // On la lie à l'annonce, qui est ici toujours la même
+      $advertSkill->setAdvert($advert);
+      // On la lie à la compétence, qui change ici dans la boucle foreach
+      $advertSkill->setSkill($skill);
+
+      // Arbitrairement, on dit que chaque compétence est requise au niveau 'Expert'
+      $advertSkill->setLevel('Expert');
+
+      // Et bien sûr, on persiste cette entité de relation, propriétaire des deux autres relations
+      $em->persist($advertSkill);
+    }
     $em->persist($advert);
 
 

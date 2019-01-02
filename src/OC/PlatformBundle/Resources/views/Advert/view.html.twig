@@ -15,21 +15,38 @@
     {% endif %}
     {{ advert.content }}
   </div>
-  {#{% for application in listApplications %}
-    <div class="well">
-      {{ application.content }}
-      <i>Posted on: {{ application.date | date("m/d/Y") }}
-        by: {{ application.author }}</i>
-    </div>
-  {% endfor %}#}
+  {% if listApplications|length > 0 %}
+    {% for application in listApplications %}
+      <div class="well">
+        {{ application.content }}
+        <i>Posted on: {{ application.date | date("m/d/Y") }}
+          by: {{ application.author }}</i>
+      </div>
+    {% endfor %}
+  {% endif %}
+
   {% if not advert.categories.empty %}
     <p>
-      Cette annonce est parue dans les catégories suivantes :
+      Cette annonce est parue dans les catégories suivantes :</p>
+    <p>
       {% for category in advert.categories %}
         {{ category.name }}{% if not loop.last %}, {% endif %}
       {% endfor %}
+
     </p>
   {% endif %}
+
+  {% if listAdvertSkills|length > 0 %}
+    <div>
+      Cette annonce requiert les compétences suivantes :
+      <ul>
+        {% for advertSkill in listAdvertSkills %}
+          <li>{{ advertSkill.skill.name }} : niveau {{ advertSkill.level }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
   <p>
     <a href="{{ path('oc_platform_home') }}" class="btn btn-default">
       <i class="glyphicon glyphicon-chevron-left"></i>

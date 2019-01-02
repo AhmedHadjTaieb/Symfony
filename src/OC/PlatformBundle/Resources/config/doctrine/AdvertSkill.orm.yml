@@ -1,0 +1,28 @@
+OC\PlatformBundle\Entity\AdvertSkill:
+    type: entity
+    table: null
+    repositoryClass: OC\PlatformBundle\Repository\AdvertSkillRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        level:
+            type: string
+            length: 255
+    manyToOne:
+      skill:
+        targetEntity: OC\PlatformBundle\Entity\Skill
+        joinColumn:
+          skill_id:
+            referencedColumnName: id
+            nullable: false
+      advert:
+        targetEntity: OC\PlatformBundle\Entity\Advert
+        joinColumn:
+          advert_id:
+            referencedColumnName: id
+            nullable: false
+    lifecycleCallbacks: {  }

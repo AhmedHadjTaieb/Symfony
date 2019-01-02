@@ -205,40 +205,75 @@ class Advert {
   }
 
 
+  /**
+   * Add category.
+   *
+   * @param \OC\PlatformBundle\Entity\Category $category
+   *
+   * @return Advert
+   */
+  public function addCategory(\OC\PlatformBundle\Entity\Category $category) {
+    $this->categories[] = $category;
 
-    /**
-     * Add category.
-     *
-     * @param \OC\PlatformBundle\Entity\Category $category
-     *
-     * @return Advert
-     */
-    public function addCategory(\OC\PlatformBundle\Entity\Category $category)
-    {
-        $this->categories[] = $category;
+    return $this;
+  }
 
-        return $this;
-    }
+  /**
+   * Remove category.
+   *
+   * @param \OC\PlatformBundle\Entity\Category $category
+   *
+   * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+   */
+  public function removeCategory(\OC\PlatformBundle\Entity\Category $category) {
+    return $this->categories->removeElement($category);
+  }
 
-    /**
-     * Remove category.
-     *
-     * @param \OC\PlatformBundle\Entity\Category $category
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeCategory(\OC\PlatformBundle\Entity\Category $category)
-    {
-        return $this->categories->removeElement($category);
-    }
+  /**
+   * Get categories.
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getCategories() {
+    return $this->categories;
+  }
 
-    /**
-     * Get categories.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCategories()
-    {
-        return $this->categories;
-    }
+  /**
+   * @var \Doctrine\Common\Collections\Collection
+   */
+  private $applications;
+
+
+  /**
+   * Add application.
+   *
+   * @param \OC\PlatformBundle\Entity\Application $application
+   *
+   * @return Advert
+   */
+  public function addApplication(\OC\PlatformBundle\Entity\Application $application) {
+    $this->applications[] = $application;
+    $application->setAdvert($this);
+    return $this;
+  }
+
+  /**
+   * Remove application.
+   *
+   * @param \OC\PlatformBundle\Entity\Application $application
+   *
+   * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+   */
+  public function removeApplication(\OC\PlatformBundle\Entity\Application $application) {
+    return $this->applications->removeElement($application);
+  }
+
+  /**
+   * Get applications.
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getApplications() {
+    return $this->applications;
+  }
 }
