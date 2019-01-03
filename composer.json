@@ -36,7 +36,8 @@
     "symfony/symfony": "3.4.*",
     "twig/twig": "^1.0||^2.0",
     "doctrine/doctrine-fixtures-bundle": "3.1.*",
-    "symfony/maker-bundle": "1.11.*"
+    "symfony/maker-bundle": "1.11.*",
+    "stof/doctrine-extensions-bundle": "^1.2.2"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",

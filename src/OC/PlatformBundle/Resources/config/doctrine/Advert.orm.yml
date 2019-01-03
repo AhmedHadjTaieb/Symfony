@@ -28,6 +28,14 @@ OC\PlatformBundle\Entity\Advert:
             nullable: true
         nbApplications:
             type: integer
+        slug:
+            type: string
+            length: 256
+            unique: true
+            gedmo:
+              slug:
+                fields:
+                  - title
     oneToOne:
         image:
           targetEntity: OC\PlatformBundle\Entity\Image
