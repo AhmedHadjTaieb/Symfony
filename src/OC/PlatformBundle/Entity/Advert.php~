@@ -205,40 +205,112 @@ class Advert {
   }
 
 
+  /**
+   * Add category.
+   *
+   * @param \OC\PlatformBundle\Entity\Category $category
+   *
+   * @return Advert
+   */
+  public function addCategory(\OC\PlatformBundle\Entity\Category $category) {
+    $this->categories[] = $category;
+
+    return $this;
+  }
+
+  /**
+   * Remove category.
+   *
+   * @param \OC\PlatformBundle\Entity\Category $category
+   *
+   * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+   */
+  public function removeCategory(\OC\PlatformBundle\Entity\Category $category) {
+    return $this->categories->removeElement($category);
+  }
+
+  /**
+   * Get categories.
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getCategories() {
+    return $this->categories;
+  }
+
+  /**
+   * @var \Doctrine\Common\Collections\Collection
+   */
+  private $applications;
+
+
+  /**
+   * Add application.
+   *
+   * @param \OC\PlatformBundle\Entity\Application $application
+   *
+   * @return Advert
+   */
+  public function addApplication(\OC\PlatformBundle\Entity\Application $application) {
+    $this->applications[] = $application;
+    $application->setAdvert($this);
+    return $this;
+  }
+
+  /**
+   * Remove application.
+   *
+   * @param \OC\PlatformBundle\Entity\Application $application
+   *
+   * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+   */
+  public function removeApplication(\OC\PlatformBundle\Entity\Application $application) {
+    return $this->applications->removeElement($application);
+  }
+
+  /**
+   * Get applications.
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getApplications() {
+    return $this->applications;
+  }
+    /**
+     * @var \DateTime|null
+     */
+    private $updateAt;
+
 
     /**
-     * Add category.
+     * Set updateAt.
      *
-     * @param \OC\PlatformBundle\Entity\Category $category
+     * @param \DateTime|null $updateAt
      *
      * @return Advert
      */
-    public function addCategory(\OC\PlatformBundle\Entity\Category $category)
+    public function setUpdateAt($updateAt = null)
     {
-        $this->categories[] = $category;
+        $this->updateAt = $updateAt;
 
         return $this;
     }
 
     /**
-     * Remove category.
+     * Get updateAt.
      *
-     * @param \OC\PlatformBundle\Entity\Category $category
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return \DateTime|null
      */
-    public function removeCategory(\OC\PlatformBundle\Entity\Category $category)
+    public function getUpdateAt()
     {
-        return $this->categories->removeElement($category);
+        return $this->updateAt;
     }
 
     /**
-     * Get categories.
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @ORM\PreUpdate
      */
-    public function getCategories()
+    public function preUpdate()
     {
-        return $this->categories;
+      $this->setUpdateAt(new \Datetime());
     }
 }

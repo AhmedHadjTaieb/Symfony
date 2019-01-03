@@ -2,6 +2,8 @@ OC\PlatformBundle\Entity\Advert:
     type: entity
     table: null
     repositoryClass: OC\PlatformBundle\Repository\AdvertRepository
+    lifecycleCallbacks:
+        preUpdate: [preUpdate]
     id:
         id:
             type: integer
@@ -21,6 +23,11 @@ OC\PlatformBundle\Entity\Advert:
             type: text
         published:
             type: boolean
+        updateAt:
+            type: datetime
+            nullable: true
+        nbApplications:
+            type: integer
     oneToOne:
         image:
           targetEntity: OC\PlatformBundle\Entity\Image

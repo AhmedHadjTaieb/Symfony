@@ -276,4 +276,77 @@ class Advert {
   public function getApplications() {
     return $this->applications;
   }
+
+  /**
+   * @var \DateTime|null
+   */
+  private $updateAt;
+
+
+  /**
+   * Set updateAt.
+   *
+   * @param \DateTime|null $updateAt
+   *
+   * @return Advert
+   */
+  public function setUpdateAt($updateAt = NULL) {
+    $this->updateAt = $updateAt;
+
+    return $this;
+  }
+
+  /**
+   * Get updateAt.
+   *
+   * @return \DateTime|null
+   */
+  public function getUpdateAt() {
+    return $this->updateAt;
+  }
+
+  /**
+   * @ORM\PreUpdate
+   */
+  public function preUpdate() {
+    $this->setUpdateAt(new \Datetime());
+  }
+
+  /**
+   * @var int
+   */
+  private $nbApplications = 0;
+
+
+  /**
+   * Set nbApplications.
+   *
+   * @param int $nbApplications
+   *
+   * @return Advert
+   */
+  public function setNbApplications($nbApplications) {
+    $this->nbApplications = $nbApplications;
+
+    return $this;
+  }
+
+  /**
+   * Get nbApplications.
+   *
+   * @return int
+   */
+  public function getNbApplications() {
+    return $this->nbApplications;
+  }
+
+  public function increaseApplication() {
+    $this->nbApplications++;
+    $this->setNbApplications($this->nbApplications);
+  }
+
+  public function decreaseApplication() {
+    $this->nbApplications--;
+    $this->setNbApplications($this->nbApplications);
+  }
 }

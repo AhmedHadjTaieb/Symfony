@@ -15,7 +15,7 @@
     {% endif %}
     {{ advert.content }}
   </div>
-  {% if listApplications|length > 0 %}
+  {% if listApplications|length %}
     {% for application in listApplications %}
       <div class="well">
         {{ application.content }}
@@ -36,7 +36,7 @@
     </p>
   {% endif %}
 
-  {% if listAdvertSkills|length > 0 %}
+  {% if listAdvertSkills|length %}
     <div>
       Cette annonce requiert les compétences suivantes :
       <ul>

@@ -2,6 +2,9 @@ OC\PlatformBundle\Entity\Application:
     type: entity
     table: null
     repositoryClass: OC\PlatformBundle\Repository\ApplicationRepository
+    lifecycleCallbacks:
+            prePersist: [increase]
+            preRemove: [decrease]
     id:
         id:
             type: integer
@@ -16,6 +19,7 @@ OC\PlatformBundle\Entity\Application:
             type: text
         date:
             type: datetime
+            nullable: true
     manyToOne:
         advert:
             targetEntity: OC\PlatformBundle\Entity\Advert

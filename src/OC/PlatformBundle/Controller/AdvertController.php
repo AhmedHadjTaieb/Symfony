@@ -55,8 +55,8 @@ class AdvertController extends Controller {
     // On récupère l'annonce $id
     $advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
 
-    if (null === $advert) {
-      throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+    if (NULL === $advert) {
+      throw new NotFoundHttpException("L'annonce d'id " . $id . " n'existe pas.");
     }
 
     // On récupère la liste des candidatures de cette annonce
@@ -68,7 +68,7 @@ class AdvertController extends Controller {
       ->findBy(array('advert' => $advert));
 
     return $this->render('@OCPlatform/Advert/view.html.twig', array(
-      'advert'           => $advert,
+      'advert' => $advert,
       'listApplications' => $listApplications,
       'listAdvertSkills' => $listAdvertSkills
     ));
@@ -112,8 +112,24 @@ class AdvertController extends Controller {
       // Et bien sûr, on persiste cette entité de relation, propriétaire des deux autres relations
       $em->persist($advertSkill);
     }
+    // Création d'une première candidature
+    $application1 = new Application();
+    $application1->setAuthor('Marine');
+    $application1->setContent("J'ai toutes les qualités requises.");
+
+    // Création d'une deuxième candidature par exemple
+    $application2 = new Application();
+    $application2->setAuthor('Pierre');
+    $application2->setContent("Je suis très motivé.");
+
+    // On lie les candidatures à l'annonce
+    $application1->setAdvert($advert);
+    $application2->setAdvert($advert);
+
     $em->persist($advert);
 
+    $em->persist($application1);
+    $em->persist($application2);
 
     // Étape 2 : On « flush » tout ce qui a été persisté avant
     $em->flush();
@@ -122,19 +138,19 @@ class AdvertController extends Controller {
     return $this->render('@OCPlatform/Advert/add.html.twig', array('advert' => $advert));
   }
 
-  public function editAction($id, Request $request)
-  {
+  public function editAction($id, Request $request) {
     $em = $this->getDoctrine()->getManager();
 
     // On récupère l'annonce $id
     $advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
 
-    if (null === $advert) {
-      throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+    if (NULL === $advert) {
+      throw new NotFoundHttpException("L'annonce d'id " . $id . " n'existe pas.");
     }
 
     // La méthode findAll retourne toutes les catégories de la base de données
-    $listCategories = $em->getRepository('OCPlatformBundle:Category')->findAll();
+    $listCategories = $em->getRepository('OCPlatformBundle:Category')
+      ->findAll();
 
     // On boucle sur les catégories pour les lier à l'annonce
     foreach ($listCategories as $category) {
