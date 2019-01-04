@@ -166,8 +166,18 @@ class AdvertController extends Controller {
   }
 
   public function deleteAction() {
+    $advert = new Advert();
+    $advert->setTitle("Recherche développeur !");
+    $advert->setAuthor('Alexandre');
+    $advert->setContent("Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…");
 
-    return $this->render('@OCPlatform/Advert/remove.html.twig', array('nom' => 'AhmedHt'));
+    $em = $this->getDoctrine()->getManager();
+    $em->persist($advert);
+    $em->flush(); // C'est à ce moment qu'est généré le slug
+
+    return new Response('Slug généré : '.$advert->getSlug());
+
+    //return $this->render('@OCPlatform/Advert/remove.html.twig', array('nom' => 'AhmedHt'));
   }
 
   public function menuAction() {
@@ -191,4 +201,6 @@ class AdvertController extends Controller {
 
     return new Response('OK');
   }
+
+
 }

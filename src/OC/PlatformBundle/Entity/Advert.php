@@ -342,12 +342,10 @@ class Advert {
 
   public function increaseApplication() {
     $this->nbApplications++;
-    $this->setNbApplications($this->nbApplications);
   }
 
   public function decreaseApplication() {
     $this->nbApplications--;
-    $this->setNbApplications($this->nbApplications);
   }
     /**
      * @var string
