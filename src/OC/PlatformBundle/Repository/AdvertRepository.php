@@ -2,6 +2,9 @@
 
 namespace OC\PlatformBundle\Repository;
 
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
+
 /**
  * AdvertRepository
  *
@@ -22,5 +25,23 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository
         return $qb
             ->getQuery()
             ->getResult();
+    }
+
+    public function getAdverts($page, $nbrPages)
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a')
+            ->leftJoin('a.image', 'i')
+            ->addSelect('i')
+            ->leftJoin('a.categories', 'c')
+            ->addselect('c')
+            ->orderBy('a.date', 'DESC')
+            ->getQuery();
+
+
+        $qb->setFirstResult(($page - 1) * $nbrPages)
+            ->setMaxResults($nbrPages);
+
+        return new Paginator($qb, true);
     }
 }
