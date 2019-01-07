@@ -11,29 +11,25 @@ namespace OCPlatformBundle\Email;
 
 use OC\PlatformBundle\Entity\Application;
 
-class ApplicationMailer
-{
+class ApplicationMailer {
   /**
    * @var \Swift_Mailer
    */
   private $mailer;
 
-  public function __construct(\Swift_Mailer $mailer)
-  {
+  public function __construct(\Swift_Mailer $mailer) {
     $this->mailer = $mailer;
   }
 
-  public function sendNewNotification(Application $application)
-  {
+  public function sendNewNotification(Application $application) {
     $message = new \Swift_Message(
       'Nouvelle candidature',
       'Vous avez reçu une nouvelle candidature.'
     );
 
     $message
-      ->addTo($application->getAdvert()->getAuthor()) // Ici bien sûr il faudrait un attribut "email", j'utilise "author" à la place
-      ->addFrom('ahmed.ht.92@gmail.com')
-    ;
+      ->addTo($application->getAdvert()->getAuthor())
+      ->addFrom('ahmed.ht.92@gmail.com');
 
     $this->mailer->send($message);
   }
