@@ -191,8 +191,12 @@ class AdvertController extends Controller {
     return new Response('OK');
   }
 
-  public function purgeAdvertAction($days) {
+  public function purgeAdvertAction($days, Request $request) {
     $purge = $this->container->get('oc_platform.purger.advert');
     $purge->purge($days);
+    $request->getSession()
+      ->getFlashBag()
+      ->add('info', 'Les annonces plus vieilles que ' . $days . ' jours ont été purgées.');
+    return $this->redirectToRoute('oc_platform_home');
   }
 }

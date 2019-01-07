@@ -8,14 +8,14 @@
 
 namespace OCPlatformBundle\PurgeAdvert;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class OCPurgerAdvert {
 
-  private $entityManager;
+  private $em;
 
-  public function __construct(EntityManager $em) {
-    $this->entityManager = $em;
+  public function __construct(EntityManagerInterface $em) {
+    $this->em = $em;
   }
 
   /**
@@ -26,12 +26,18 @@ class OCPurgerAdvert {
    *
    */
   public function purge($days) {
-    $dateSearched = date('Y-m-d H:i:m', strtotime("-$days days"));
-    $qb = $this->entityManager->createQueryBuilder();
-    $qb->delete('OCPlatformBundle:Advert', 'a')
-      ->where('a.date <= :dateSearched AND a.nbApplications = 0')
-      ->setParameter('dateSearched', $dateSearched)
-      ->getQuery()
-      ->execute();
+    $advertRepository = $this->em->getRepository('OCPlatformBundle:Advert');
+    $advertSkillRepository = $this->em->getRepository('OCPlatformBundle:AdvertSkill');
+    $date = new \Datetime($days . ' days ago');
+    $listAdverts = $advertRepository->getAdvertsBefore($date);
+
+    foreach ($listAdverts as $advert) {
+      $advertSkills = $advertSkillRepository->findBy(array('advert' => $advert));
+      foreach ($advertSkills as $advertSkill) {
+        $this->em->remove($advertSkill);
+      }
+      $this->em->remove($advert);
+    }
+    $this->em->flush();
   }
 }
