@@ -40,6 +40,8 @@ twig:
         webmaster: '%app_webmaster%'
     paths:
         "%kernel.root_dir%/../src/OC/CoreBundle/Resources/views/": CoreBundle
+    form_themes:
+        - 'bootstrap_3_layout.html.twig'
 
 # Doctrine Configuration
 doctrine:

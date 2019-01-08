@@ -16,7 +16,7 @@ use OC\PlatformBundle\Entity\Application;
 use OC\PlatformBundle\Entity\AdvertSkill;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
-use \Datetime;
+use OC\PlatformBundle\Form\AdvertType;
 
 class AdvertController extends Controller {
 
@@ -67,84 +67,54 @@ class AdvertController extends Controller {
 
   public function addAction(Request $request) {
     $advert = new Advert();
-    $advert->setTitle('Recherche développeur Symfony.');
-    $advert->setAuthor('Alexandre');
-    $advert->setContent("Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…");
 
-    $image = new Image();
-    $image->setUrl('http://sdz-upload.s3.amazonaws.com/prod/upload/job-de-reve.jpg');
-    $image->setAlt('Job de rêve');
+    $advert = new Advert;
+    $form = $this->createForm(AdvertType::class, $advert);
 
-    $advert->setImage($image);
-
-    $em = $this->getDoctrine()->getManager();
-
-    $listSkills = $em->getRepository('OCPlatformBundle:Skill')->findAll();
-
-    foreach ($listSkills as $skill) {
-      $advertSkill = new AdvertSkill();
-      $advertSkill->setAdvert($advert);
-      $advertSkill->setSkill($skill);
-      $advertSkill->setLevel('Expert');
-      $em->persist($advertSkill);
-    }
-
-    $application1 = new Application();
-    $application1->setAuthor('Marine');
-    $application1->setContent("J'ai toutes les qualités requises.");
-
-    $application2 = new Application();
-    $application2->setAuthor('Pierre');
-    $application2->setContent("Je suis très motivé.");
-
-    $application1->setAdvert($advert);
-    $application2->setAdvert($advert);
-
-    $em->persist($advert);
-
-    $em->persist($application1);
-    $em->persist($application2);
-
-    $em->flush();
 
     if ($request->isMethod('POST')) {
-      $request->getSession()
-        ->getFlashBag()
-        ->add('notice', 'Annonce bien ajouteé.');
+      $form->handleRequest($request);
+      if ($form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($advert);
+        $em->flush();
+        $request->getSession()
+          ->getFlashBag()
+          ->add('info', 'Annonce bien ajouteé.');
 
-      return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
+        return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
+      }
     }
-
-    return $this->render('@OCPlatform/Advert/add.html.twig', array('advert' => $advert));
+    return $this->render('@OCPlatform/Advert/add.html.twig', array('form' => $form->createView()));
   }
 
   public function editAction($id, Request $request) {
-    $em = $this->getDoctrine()->getManager();
-
-    $advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
-
+    $advert = $this->getDoctrine()
+      ->getManager()
+      ->getRepository('OCPlatformBundle:Advert')
+      ->find($id);
     if (NULL === $advert) {
       throw new NotFoundHttpException("L'annonce d'id " . $id . " n'existe pas.");
     }
 
-    $listCategories = $em->getRepository('OCPlatformBundle:Category')
-      ->findAll();
 
-    foreach ($listCategories as $category) {
-      $advert->addCategory($category);
-    }
+    $form =  $this->createForm(AdvertType::class, $advert);
 
-    $em->flush();
 
     if ($request->isMethod('POST')) {
-      $request->getSession()
-        ->getFlashBag()
-        ->add('notice', 'Annonce bien modifiée.');
+      $form->handleRequest($request);
+      if ($form->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($advert);
+        $em->flush();
+        $request->getSession()
+          ->getFlashBag()
+          ->add('notice', 'Annonce bien modifiée.');
 
-      return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
+        return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
+      }
     }
-
-    return $this->render('@OCPlatform/Advert/edit.html.twig', array('advert' => $advert));
+    return $this->render('@OCPlatform/Advert/edit.html.twig', array('form' => $form->createView(),'advert'=>$advert));
   }
 
   public function deleteAction($id) {
