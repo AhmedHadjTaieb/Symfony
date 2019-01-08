@@ -8,6 +8,7 @@
 
 namespace OC\PlatformBundle\Controller;
 
+use OC\PlatformBundle\Form\AdvertEditType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use OC\PlatformBundle\Entity\Advert;
@@ -66,8 +67,6 @@ class AdvertController extends Controller {
   }
 
   public function addAction(Request $request) {
-    $advert = new Advert();
-
     $advert = new Advert;
     $form = $this->createForm(AdvertType::class, $advert);
 
@@ -98,7 +97,7 @@ class AdvertController extends Controller {
     }
 
 
-    $form =  $this->createForm(AdvertType::class, $advert);
+    $form =  $this->createForm(AdvertEditType::class, $advert);
 
 
     if ($request->isMethod('POST')) {
