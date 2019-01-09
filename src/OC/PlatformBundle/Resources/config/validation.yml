@@ -1,0 +1,13 @@
+OCPlatformBundle\Entity\Advert:
+    properties:
+        title:
+            - Length:
+                min: 2
+        date:
+            - DateTime: ~
+        author:
+            - NotBlank: ~
+        content:
+            - NotBlank: ~
+        image:
+            - Valid: ~

@@ -2,6 +2,13 @@ OC\PlatformBundle\Entity\Image:
     type: entity
     table: null
     repositoryClass: OC\PlatformBundle\Repository\ImageRepository
+    lifecycleCallbacks:
+            prePersist: [preUpload]
+            preUpdate: [preUpload]
+            postPersist: [upload]
+            postUpdate: [upload]
+            postRemove: [removeUpload]
+            preRemove: [preRemoveUpload]
     id:
         id:
             type: integer

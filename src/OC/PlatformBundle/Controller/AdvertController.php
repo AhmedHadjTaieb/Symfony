@@ -82,6 +82,10 @@ class AdvertController extends Controller {
           ->add('info', 'Annonce bien ajouteé.');
 
         return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
+
+      }
+      else {
+        return new Response((string) $form->isValid());
       }
     }
     return $this->render('@OCPlatform/Advert/add.html.twig', array('form' => $form->createView()));
@@ -97,7 +101,7 @@ class AdvertController extends Controller {
     }
 
 
-    $form =  $this->createForm(AdvertEditType::class, $advert);
+    $form = $this->createForm(AdvertEditType::class, $advert);
 
 
     if ($request->isMethod('POST')) {
@@ -113,10 +117,13 @@ class AdvertController extends Controller {
         return $this->redirectToRoute('oc_platform_view', array('id' => $advert->getId()));
       }
     }
-    return $this->render('@OCPlatform/Advert/edit.html.twig', array('form' => $form->createView(),'advert'=>$advert));
+    return $this->render('@OCPlatform/Advert/edit.html.twig', array(
+      'form' => $form->createView(),
+      'advert' => $advert
+    ));
   }
 
-  public function deleteAction($id) {
+  public function deleteAction($id, Request $request) {
     $em = $this->getDoctrine()->getManager();
 
     $advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
@@ -124,15 +131,29 @@ class AdvertController extends Controller {
     if (NULL === $advert) {
       throw new NotFoundHttpException("L'annonce d'id " . $id . " n'existe pas.");
     }
+    $form = $this->get('form.factory')->create();
 
-    foreach ($advert->getCategories() as $category) {
-      $advert->removeCategory($category);
+    if ($request->isMethod('POST') && $form->handleRequest($request)
+        ->isValid()) {
+
+      /* foreach ($advert->getCategories() as $category) {
+         $advert->removeCategory($category);
+       }*/
+
+      $em->remove($advert);
+      $em->flush();
+
+      $request->getSession()
+        ->getFlashBag()
+        ->add('info', "L'annonce a bien été supprimée.");
+
+      return $this->redirectToRoute('oc_platform_home');
     }
 
-    $em->flush();
-
-
-    return $this->render('@OCPlatform/Advert/remove.html.twig');
+    return $this->render('@OCPlatform/Advert/remove.html.twig', array(
+      'advert' => $advert,
+      'form' => $form->createView(),
+    ));
   }
 
   public function menuAction($limit) {

@@ -42,7 +42,7 @@ OC\PlatformBundle\Entity\Advert:
           joinColumn:
             name: image_id
             referencedColumnName: id
-          cascade: [persist]
+          cascade: [persist, remove]
     manyToMany:
       categories:
         targetEntity: OC\PlatformBundle\Entity\Category

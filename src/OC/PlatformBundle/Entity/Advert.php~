@@ -7,8 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Advert
  *
- * @ORM\Table(name="advert")
- * @ORM\Entity(repositoryClass="OC\PlatformBundle\Entity\AdvertRepository")
  */
 class Advert {
 
@@ -44,21 +42,17 @@ class Advert {
   private $published = TRUE;
 
 
-  /**
-   * @OneToOne(targetEntity="OC\PlatformBundle\Entity\Image", cascade={"persist"})
-   * @JoinColumn(name="image_id", nullable=false, referncedColumnName="id")
-   */
+
   private $image;
 
-  /**
-   * @ManyToMany(targetEntity="OC\PlatformBundle\Entity\Category", cascade={"persist"})
-   */
+
   private $categories;
 
 
   public function __construct() {
     $this->date = new \Datetime();
     $this->categories = new ArrayCollection();
+    $this->applications = new ArrayCollection();
 
   }
 
@@ -305,9 +299,6 @@ class Advert {
     return $this->updateAt;
   }
 
-  /**
-   * @ORM\PreUpdate
-   */
   public function preUpdate() {
     $this->setUpdateAt(new \Datetime());
   }
@@ -342,12 +333,10 @@ class Advert {
 
   public function increaseApplication() {
     $this->nbApplications++;
-    $this->setNbApplications($this->nbApplications);
   }
 
   public function decreaseApplication() {
     $this->nbApplications--;
-    $this->setNbApplications($this->nbApplications);
   }
     /**
      * @var string
