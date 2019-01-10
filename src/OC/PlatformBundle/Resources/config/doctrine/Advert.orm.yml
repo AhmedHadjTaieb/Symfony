@@ -36,6 +36,9 @@ OC\PlatformBundle\Entity\Advert:
               slug:
                 fields:
                   - title
+        ipAddress:
+            type: string
+            length: 24
     oneToOne:
         image:
           targetEntity: OC\PlatformBundle\Entity\Image

@@ -3,7 +3,7 @@ OC\PlatformBundle\Entity\Application:
     table: null
     repositoryClass: OC\PlatformBundle\Repository\ApplicationRepository
     lifecycleCallbacks:
-            prePersist: [increase]
+            prePersist: [increase, saveDate]
             preRemove: [decrease]
     id:
         id:
@@ -20,6 +20,9 @@ OC\PlatformBundle\Entity\Application:
         date:
             type: datetime
             nullable: true
+        ipAddress:
+            type: string
+            length: 24
     manyToOne:
         advert:
             targetEntity: OC\PlatformBundle\Entity\Advert

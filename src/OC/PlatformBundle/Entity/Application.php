@@ -26,7 +26,10 @@ class Application
      * @var \DateTime
      */
     private $date;
-
+  /**
+   * @var string
+   */
+    private $ipAddress;
   /**
    * @ManyToOne(targetEntity="OC\PlatformBundle\Entity\Advert")
    * @JoinColumn(nullable=false)
@@ -157,5 +160,38 @@ class Application
     {
       $this->getAdvert()->decreaseApplication();
 
+    }
+
+    /**
+     * Set ipAddress.
+     *
+     * @param string $ipAddress
+     *
+     * @return Application
+     */
+    public function setIpAddress($ipAddress)
+    {
+        $this->ipAddress = $ipAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get ipAddress.
+     *
+     * @return string
+     */
+    public function getIpAddress()
+    {
+        return $this->ipAddress;
+    }
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function saveDate()
+    {
+        $this->setDate(new \DateTime());
     }
 }

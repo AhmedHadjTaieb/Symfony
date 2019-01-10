@@ -3,6 +3,8 @@
 namespace OC\PlatformBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use OCPlatformBundle\Validator\Constraints\Antiflood;
 
 /**
  * Advert
@@ -42,12 +44,14 @@ class Advert {
   private $published = TRUE;
 
 
-
   private $image;
 
 
   private $categories;
-
+  /**
+   * @var string
+   */
+  private $ipAddress;
 
   public function __construct() {
     $this->date = new \Datetime();
@@ -338,33 +342,67 @@ class Advert {
   public function decreaseApplication() {
     $this->nbApplications--;
   }
-    /**
-     * @var string
-     */
-    private $slug;
+
+  /**
+   * @var string
+   */
+  private $slug;
 
 
-    /**
-     * Set slug.
-     *
-     * @param string $slug
-     *
-     * @return Advert
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
+  /**
+   * Set slug.
+   *
+   * @param string $slug
+   *
+   * @return Advert
+   */
+  public function setSlug($slug) {
+    $this->slug = $slug;
 
-        return $this;
+    return $this;
+  }
+
+  /**
+   * Get slug.
+   *
+   * @return string
+   */
+  public function getSlug() {
+    return $this->slug;
+  }
+
+  public function isContentValid(ExecutionContextInterface $context) {
+    $forbiddenWords = array('démotivation', 'abandon');
+
+    if (preg_match('#' . implode('|', $forbiddenWords) . '#', $this->getContent())) {
+      $context
+        ->buildViolation('Contenu invalide car il contient un mot interdit.')// message
+        ->atPath('content')// attribut de l'objet qui est violé
+        ->addViolation() // ceci déclenche l'erreur, ne l'oubliez pas
+      ;
     }
+  }
 
-    /**
-     * Get slug.
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
+  /**
+   * Set ipAddress.
+   *
+   * @param string $ipAddress
+   *
+   * @return Advert
+   */
+  public function setIpAddress($ipAddress) {
+    $this->ipAddress = $ipAddress;
+
+    return $this;
+  }
+
+  /**
+   * Get ipAddress.
+   *
+   * @return string
+   */
+  public function getIpAddress() {
+    return $this->ipAddress;
+  }
+
 }

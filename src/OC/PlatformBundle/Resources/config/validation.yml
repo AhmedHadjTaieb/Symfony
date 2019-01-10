@@ -1,13 +1,18 @@
-OCPlatformBundle\Entity\Advert:
+OC\PlatformBundle\Entity\Advert:
+    constraints:
+        - Callback: isContentValid
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
     properties:
         title:
             - Length:
-                min: 2
+                min: 6
+                minMessage: "the title is too short"
         date:
             - DateTime: ~
         author:
             - NotBlank: ~
         content:
             - NotBlank: ~
+            - OCPlatformBundle\Validator\Constraints\Antiflood: ~
         image:
             - Valid: ~

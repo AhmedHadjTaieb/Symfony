@@ -69,12 +69,18 @@ class AdvertController extends Controller {
   public function addAction(Request $request) {
     $advert = new Advert;
     $form = $this->createForm(AdvertType::class, $advert);
-
-
     if ($request->isMethod('POST')) {
       $form->handleRequest($request);
       if ($form->isValid()) {
         $em = $this->getDoctrine()->getManager();
+        $advert->setIpAddress($request->getClientIp());
+        $ap = new Application();
+        $ap->setAdvert($advert);
+        $ap->setIpAddress($request->getClientIp());
+
+        $ap->setAuthor('test author');
+        $ap->setContent($advert->getContent());
+        $em->persist($ap);
         $em->persist($advert);
         $em->flush();
         $request->getSession()
@@ -85,7 +91,7 @@ class AdvertController extends Controller {
 
       }
       else {
-        return new Response((string) $form->isValid());
+        // return new Response($form->getErrors());
       }
     }
     return $this->render('@OCPlatform/Advert/add.html.twig', array('form' => $form->createView()));

@@ -51,4 +51,6 @@ class AdvertRepository extends \Doctrine\ORM\EntityRepository {
       ->getQuery()
       ->getResult();
   }
+
+
 }
