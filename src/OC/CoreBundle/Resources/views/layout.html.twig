@@ -14,6 +14,7 @@
 
 <body>
 <div class="container">
+  {% if app.user is not null %}<h4>Bonjour {{ app.user.username }}</h4>{% endif %}
   <div id="header" class="jumbotron">
     <h1>Ma plateforme d'annonces</h1>
     <p>

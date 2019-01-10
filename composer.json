@@ -6,7 +6,8 @@
     "psr-4": {
       "": "src/",
       "OCPlatformBundle\\": "src/OC/PlatformBundle",
-      "OCCoreBundle\\": "src/OC/CoreBundle"
+      "OCCoreBundle\\": "src/OC/CoreBundle",
+      "OCUserBundle\\": "src/OC/UserBundle"
     },
     "classmap": [
       "app/AppKernel.php",
@@ -17,7 +18,9 @@
     "psr-4": {
       "Tests\\": "tests/",
       "OCPlatformBundle\\": "src/OC/PlatformBundle",
-      "OCCoreBundle\\": "src/OC/CoreBundle"
+      "OCCoreBundle\\": "src/OC/CoreBundle",
+      "OCUserBundle\\": "src/OC/UserBundle"
+
     },
     "files": [
       "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"

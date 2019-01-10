@@ -1,3 +1,14 @@
+login:
+    path: /login
+    defaults:
+        _controller: OCUserBundle:Security:login
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
 oc_core:
     resource: "@CoreBundle/Resources/config/routing.yml"
     prefix:   /
