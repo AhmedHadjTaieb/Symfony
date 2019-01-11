@@ -383,27 +383,26 @@ class Advert {
     }
   }
 
-    /**
-     * Set ipAddress.
-     *
-     * @param string $ipAddress
-     *
-     * @return Advert
-     */
-    public function setIpAddress($ipAddress)
-    {
-        $this->ipAddress = $ipAddress;
+  /**
+   * Set ipAddress.
+   *
+   * @param string $ipAddress
+   *
+   * @return Advert
+   */
+  public function setIpAddress($ipAddress) {
+    $this->ipAddress = $ipAddress;
 
-        return $this;
-    }
+    return $this;
+  }
 
-    /**
-     * Get ipAddress.
-     *
-     * @return string
-     */
-    public function getIpAddress()
-    {
-        return $this->ipAddress;
-    }
+  /**
+   * Get ipAddress.
+   *
+   * @return string
+   */
+  public function getIpAddress() {
+    return $this->ipAddress;
+  }
+
 }

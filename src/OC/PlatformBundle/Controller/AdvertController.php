@@ -18,6 +18,8 @@ use OC\PlatformBundle\Entity\AdvertSkill;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
 use OC\PlatformBundle\Form\AdvertType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AdvertController extends Controller {
 
@@ -66,8 +68,15 @@ class AdvertController extends Controller {
 
   }
 
+  /**
+   * @Security("has_role('ROLE_AUTEUR')")
+   */
   public function addAction(Request $request) {
     $advert = new Advert;
+    if (!$this->get('security.authorization_checker')
+      ->isGranted('ROLE_AUTEUR')) {
+      throw new AccessDeniedException('Accès limité aux auteurs.');
+    }
     $form = $this->createForm(AdvertType::class, $advert);
     if ($request->isMethod('POST')) {
       $form->handleRequest($request);

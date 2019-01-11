@@ -81,7 +81,7 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 # Type docker-php-ext-install to see available extensions
 RUN docker-php-ext-install pdo pdo_mysql
 
-
+RUN echo "memory_limit=2G" >> /usr/local/etc/php/php.ini
 # install xdebug
 RUN pecl install xdebug \
 && docker-php-ext-enable xdebug \

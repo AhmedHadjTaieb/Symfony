@@ -41,7 +41,8 @@
     "doctrine/doctrine-fixtures-bundle": "3.1.*",
     "symfony/maker-bundle": "1.11.*",
     "stof/doctrine-extensions-bundle": "^1.2.2",
-    "symfony/validator": "3.4.21"
+    "symfony/validator": "3.4.21",
+    "friendsofsymfony/user-bundle": "2.1.1"
   },
   "require-dev": {
     "sensio/generator-bundle": "^3.0",

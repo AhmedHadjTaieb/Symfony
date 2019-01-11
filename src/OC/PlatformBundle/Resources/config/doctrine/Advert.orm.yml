@@ -39,6 +39,7 @@ OC\PlatformBundle\Entity\Advert:
         ipAddress:
             type: string
             length: 24
+            nullable: true
     oneToOne:
         image:
           targetEntity: OC\PlatformBundle\Entity\Image
