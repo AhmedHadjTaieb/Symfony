@@ -28,7 +28,7 @@ class AdvertController extends Controller {
       throw new NotFoundHttpException('Page "' . $page . '" inexistante.');
     }
 
-    $nbPages = 2;
+    $nbPages = 5;
 
     $listAdverts = $this->getDoctrine()->getManager()
       ->getRepository('OCPlatformBundle:Advert')->getAdverts($page, $nbPages);
@@ -68,15 +68,15 @@ class AdvertController extends Controller {
 
   }
 
-  /**
+/*  /**
    * @Security("has_role('ROLE_AUTEUR')")
    */
   public function addAction(Request $request) {
     $advert = new Advert;
-    if (!$this->get('security.authorization_checker')
+/*    if (!$this->get('security.authorization_checker')
       ->isGranted('ROLE_AUTEUR')) {
       throw new AccessDeniedException('Accès limité aux auteurs.');
-    }
+    }*/
     $form = $this->createForm(AdvertType::class, $advert);
     if ($request->isMethod('POST')) {
       $form->handleRequest($request);
