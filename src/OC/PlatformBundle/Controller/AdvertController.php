@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use OC\PlatformBundle\Form\AdvertType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class AdvertController extends Controller {
 
@@ -45,12 +46,16 @@ class AdvertController extends Controller {
     ));
   }
 
-  public function viewAction($id) {
+
+    /**
+     * @ParamConverter("advert", options={"mapping": {"advert_id": "id"}})
+     */
+  public function viewAction(Advert $advert) {
     $em = $this->getDoctrine()->getManager();
-    $advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
+    //$advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
 
     if (NULL === $advert) {
-      throw new NotFoundHttpException("L'annonce d'id " . $id . " n'existe pas.");
+      throw new NotFoundHttpException("L'annonce d'id " . $advert->getId() . " n'existe pas.");
     }
     $listApplications = $em
       ->getRepository('OCPlatformBundle:Application')
@@ -204,4 +209,11 @@ class AdvertController extends Controller {
       ->add('info', 'Les annonces plus vieilles que ' . $days . ' jours ont été purgées.');
     return $this->redirectToRoute('oc_platform_home');
   }
+
+    public function translationAction($name)
+    {
+        return $this->render('@OCPlatform/Advert/translation.html.twig', array(
+            'name' => $name
+        ));
+    }
 }
