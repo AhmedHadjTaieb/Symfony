@@ -1,18 +1,36 @@
 {% extends "@CoreBundle/layout.html.twig" %}
 
 {% block title %}
-  Ajouter une nouvelle annonce - {{ parent() }}
+    Ajouter une nouvelle annonce - {{ parent() }}
 {% endblock %}
 
 {% block ocplatform_body %}
 
-  <h2>Ajouter une annonce</h2>
+    <h2>Ajouter une annonce</h2>
 
-  {{ include("@OCPlatform/Advert/form.html.twig") }}
+    {{ include("@OCPlatform/Advert/form.html.twig") }}
 
-  <p>
-    Vous ajouter une nouvelle annonce.
-  </p>
+    <p>
+        Vous ajouter une nouvelle annonce.
+    </p>
 
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $("form[name='oc_platformbundle_advert']").on('submit', function (e) {
+                console.log($('#oc_platformbundle_advert_title').val().length);
+                console.log($('#oc_platformbundle_advert_title').val());
+                if ($('#oc_platformbundle_advert_title').val().length <= 6) {
+                    console.log('error')
+                    e.preventDefault();
+                } else {
+                    console.log('valid');
+                }
+            })
+        });
+    </script>
 {% endblock %}

@@ -22,6 +22,7 @@ class LoadAdvert implements FixtureInterface {
       $advert->setTitle("title_advert_$x");
       $advert->setAuthor("author_advert_$x");
       $advert->setContent("content_advert_$x");
+      $advert->setContent("content_advert_$x");
       if (in_array($x, [3, 6, 9])) {
         $application = new Application();
         $application->setAuthor("author_application_$x");

@@ -18,7 +18,7 @@ class BetaHTMLAdder
         $content = $response->getContent();
 
 
-        $html = '<div style="position: absolute; top: 0; background: orange; width: 100%; text-align: center; padding: 0.5em;">Beta J-'.(int) $remainingDays.' !</div>';
+        $html = '<div style="position: relative; top: 0; background: orange; width: 90%; text-align: center; padding: 0.5em; margin:0 auto;">Beta J-'.(int) $remainingDays.' !</div>';
 
         // Insertion du code dans la page, au début du <body>
         $content = str_replace(

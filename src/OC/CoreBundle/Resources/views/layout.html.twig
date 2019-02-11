@@ -8,8 +8,12 @@
   <title>{% block title %}OC Plateforme{% endblock %}</title>
 
   {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   {% endblock %}
+    {% stylesheets filter='cssrewrite, scssphp' 'bundles/ocplatform/css/*' %}
+      <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
 </head>
 
 <body>
@@ -39,7 +43,7 @@
       <h3>Les annonces</h3>
       <ul class="nav nav-pills nav-stacked">
         <li><a href="{{ path('oc_platform_home') }}">Accueil</a></li>
-        {% if is_granted('ROLE_AUTEUR') %}
+        {% if is_granted('ROLE_ADMIN') %}
         <li><a href="{{ path('oc_platform_add') }}">Ajouter une annonce</a></li>
         {% endif %}
 
@@ -62,10 +66,14 @@
 </div>
 
 {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 {% endblock %}
 
+{% javascripts filter='?scssphp' 'bundles/ocplatform/js/main.js' %}
+  <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
 </body>
 <footer>
 {{ webmaster }}

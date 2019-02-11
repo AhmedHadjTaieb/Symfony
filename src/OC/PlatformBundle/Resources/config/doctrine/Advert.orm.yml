@@ -63,4 +63,3 @@ OC\PlatformBundle\Entity\Advert:
       applications:
         targetEntity: OC\PlatformBundle\Entity\Application
         mappedBy: advert
-    lifecycleCallbacks: {  }

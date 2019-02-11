@@ -1,7 +1,7 @@
 <h3>Formulaire d'annonce</h3>
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
-
-<div class="well">
+<div class="card card-body bg-light">
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
     {# Les erreurs générales du formulaire. #}
@@ -9,46 +9,54 @@
 
     {# Génération du label + error + widget pour un champ. #}
     {% if form.date is defined %}
+
         {{ form_row(form.date) }}
     {% endif %}
 
     {# Génération manuelle et éclatée : #}
     <div class="form-group">
-        {# Génération du label. #}
-        {{ form_label(form.title, "Titre de l'annonce", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-
-        {# Affichage des erreurs pour ce champ précis. #}
-        {{ form_errors(form.title) }}
-
-        <div class="col-sm-10">
-            {# Génération de l'input. #}
-            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        {{ form_label(form.title, "Annonce_title"|trans, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+        <div class="col-sm-8">
+            {% set error = (not form.vars.valid)? 'error' : '' %}
+            {{ form_widget(form.title, {'attr': {'class': 'form-control '~error}}) }}
         </div>
+        {% if not form.vars.valid %}
+            <div class="error_message  col-md-offset-4">
+                {{ form_errors(form.title) }}
+            </div>
+        {% endif %}
     </div>
+
 
     {# Idem pour un autre champ. #}
     <div class="form-group">
-        {{ form_label(form.content, "Contenu de l'annonce", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_label(form.content, "Annonce_Contenu"|trans, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
         {{ form_errors(form.content) }}
         <div class="col-sm-10">
             {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
         </div>
     </div>
 
-    {{ form_row(form.author) }}
+    <div class="form-group">
+        {{ form_label(form.author, "Annonce_Author"|trans, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_errors(form.author) }}
+        <div class="col-sm-10">
+            {{ form_widget(form.author, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+
     {% if form.published is defined %}
-        {{ form_row(form.published) }}
+        {{ form_label(form.published, "Annonce_Published"|trans, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+        {{ form_widget(form.published) }}
     {% endif %}
+
     {{ form_rest(form.image) }}
 
-    {# Génération automatique des champs pas encore écrits.
-       Dans cet exemple, ce serait le champ CSRF (géré automatiquement par Symfony !)
-       et tous les champs cachés (type « hidden »). #}
+
     {{ form_rest(form) }}
 
-    {# Pour le bouton, pas de label ni d'erreur, on affiche juste le widget #}
     {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
 
-    {# Fermeture de la balise <form> du formulaire HTML #}
     {{ form_end(form) }}
 </div>

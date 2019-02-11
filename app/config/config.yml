@@ -29,9 +29,14 @@ framework:
         save_path: '%kernel.project_dir%/var/sessions/%kernel.environment%'
     fragments: ~
     http_method_override: true
-    assets: ~
+    assets:
+        json_manifest_path: '%kernel.root_dir%/../web/build/manifest.json'
     php_errors:
         log: true
+    templating:
+        engines: ['twig']
+    profiler:
+        enabled: %kernel.debug%
 
 # Twig Configuration
 twig:
@@ -42,8 +47,7 @@ twig:
     paths:
         "%kernel.root_dir%/../src/OC/CoreBundle/Resources/views/": CoreBundle
         "%kernel.root_dir%/../src/OC/UserBundle/Resources/views/": OCUserBundle
-    form_themes:
-        - 'bootstrap_3_layout.html.twig'
+    form_themes: ['bootstrap_3_layout.html.twig']
 
 # Doctrine Configuration
 doctrine:
@@ -94,3 +98,15 @@ fos_user:
     from_email:
         address: 'testapp@testapp.com'
         sender_name: 'Test App'
+
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+        jsqueeze:  ~
+        scssphp:
+            formatter: 'Leafo\ScssPhp\Formatter\Compressed'
+
+webpack_encore:
+    output_path: '%kernel.root_dir%/../web/build/'

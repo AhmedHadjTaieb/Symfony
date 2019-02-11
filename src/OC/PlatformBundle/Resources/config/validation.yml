@@ -6,7 +6,7 @@ OC\PlatformBundle\Entity\Advert:
         title:
             - Length:
                 min: 6
-                minMessage: "the title is too short"
+                minMessage: "Short_Title"
         date:
             - DateTime: ~
         author:

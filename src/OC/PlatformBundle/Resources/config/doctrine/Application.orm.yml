@@ -23,6 +23,7 @@ OC\PlatformBundle\Entity\Application:
         ipAddress:
             type: string
             length: 24
+            nullable: true
     manyToOne:
         advert:
             targetEntity: OC\PlatformBundle\Entity\Advert

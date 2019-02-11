@@ -111,6 +111,9 @@ class AdvertController extends Controller {
     return $this->render('@OCPlatform/Advert/add.html.twig', array('form' => $form->createView()));
   }
 
+    /**
+     * @ParamConverter("advert", options={"mapping": {"advert_id": "id"}})
+     */
   public function editAction($id, Request $request) {
     $advert = $this->getDoctrine()
       ->getManager()

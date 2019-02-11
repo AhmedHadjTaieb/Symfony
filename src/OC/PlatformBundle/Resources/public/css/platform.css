@@ -1,0 +1,6 @@
+div.error_message span.help-block{
+    color:#a94442;
+}
+.form-control.error{
+    border: 1px solid #a94442;
+}
